@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "bloomed"
   spec.version       = Bloomed::VERSION
   spec.authors       = ["Søren Skovsbøll"]
-  spec.email         = ["soren@skovsboll.com"]
+  spec.email         = ["soren@wero.es"]
 
   spec.summary       = "Bloom filter check for pwned passwords"
   spec.description   = "Check your users' passwords using a fraction of the memory of the full pwned passwords list."
@@ -33,7 +33,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "bloomer"
-  spec.add_dependency "seven_zip_ruby"
 
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"

@@ -1,8 +1,7 @@
 # Bloomed
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/bloomed`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Troy Hunt's brilliant haveibeenpwned.com let's you download SHA1s of 517,238,891 real world passwords previously exposed in data breaches. This list is comprehensive but huge in size: 11GB compressed.
+Using a bloom filter we can reduce the size down to files measured in MBs.
 
 ## Installation
 
@@ -22,7 +21,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+There are two ways to vary the size and the accuracy of the bloom filter.
+
+To keep this repo small you'll only find a sma
+
+
 
 ## Development
 
