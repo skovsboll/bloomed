@@ -1,7 +1,11 @@
 # Bloomed
 
 Troy Hunt's brilliant haveibeenpwned.com let's you download SHA1s of 517,238,891 real world passwords previously exposed in data breaches. This list is comprehensive but huge in size: 11GB compressed.
-Using a bloom filter we can reduce the size down to files measured in MBs.
+Using a bloom filter we can reduce the size down to files measured in MBs. 
+
+You can even keep a the bloom filter in memory in your web app or api. This is great if you're afraid to send the passwords that your users enter, to an external service for lookup.
+
+This gem will let you control the trade off between memory size and precision. False positives will occur (that's the nature of bloom filters), but you control the frequency and how many of the pwned passwords you want in your filter, starting from the most pwned at the top.
 
 ## Installation
 
@@ -21,10 +25,49 @@ Or install it yourself as:
 
 ## Usage
 
-There are two ways to vary the size and the accuracy of the bloom filter.
+### Quick start
 
-To keep this repo small you'll only find a sma
+```ruby
+require 'bloomed'
+pw=Bloomed::PW.new
+pw.pwned? "password123"
+=> true
+```
 
+### Using lower precision / lower memory consumption
+
+There are two parameters that can be varied: `top` and `false_positive_probability`.
+
+
+```ruby
+require 'bloomed'
+pw=Bloomed::PW.new(top: 100000, false_positive_probability: 0.01) # 136 kb memory
+pw.pwned? "password123"
+=> true
+```
+
+### Using higher precision / higher memory consumption
+
+To keep the gem size small, it only ships with dumps up to 253 kb in size.
+
+To generate a larger, optimized bloom filter for pwned passwords, please download pwned-passwords-ordered-by-count.7z from https://haveibeenpwned.com and extract `pwned-passwords-ordered-by-count.txt` to the current dir.
+
+Once you have the `pwned-passwords-ordered-by-count.txt` file in place, you can run the following to generate the filter and cache it for later (on your machine.)
+
+```ruby
+require 'bloomed'
+pw=Bloomed::PW.new(top: 1E8, false_positive_probability: 0.0001) # 247 Mb! memory
+pw.pwned? "password123"
+=> true
+```
+
+### The cache
+
+The cache is stored in the `dumps` dir inside `dirname $(gem which bloomed)`.
+
+### Size of the in memory bloom filter
+
+The filter can vary much in size. Use `Bloomed:PW#memory_size_bytes` to get the exact size.
 
 
 ## Development
@@ -35,7 +78,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/bloomed. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/skovsboll/bloomed. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
