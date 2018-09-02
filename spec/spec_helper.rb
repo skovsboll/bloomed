@@ -12,3 +12,11 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+require 'rspec/expectations'
+
+RSpec::Matchers.define :be_pwned do
+  match do |actual|
+    subject.pwned? actual
+  end
+end
