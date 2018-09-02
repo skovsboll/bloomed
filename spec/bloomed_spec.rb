@@ -10,8 +10,8 @@ RSpec.describe Bloomed do
       expect('password123').to be_pwned
     end
 
-    it 'does not detect password20' do
-      expect('password20').not_to be_pwned
+    it 'does not detect password200' do
+      expect('password200').not_to be_pwned
     end
 
     it 'does not detect o9wreiour' do
