@@ -1,7 +1,7 @@
 # Bloomed
 
 Troy Hunt's brilliant haveibeenpwned.com let's you download SHA1s of 517,238,891 real world passwords previously exposed in data breaches. This list is comprehensive but huge in size: 11GB compressed.
-Using a bloom filter we can reduce the size down to files measured in MBs. 
+Using a bloom filter we can reduce the size down to files measured in MBs.
 
 You can even keep a the bloom filter in memory in your web app or api. This is great if you're afraid to send the passwords that your users enter, to an external service for lookup.
 
@@ -50,20 +50,28 @@ pw.pwned? "password123"
 
 To keep the gem size small, it only ships with dumps up to 253 kb in size.
 
-To generate a larger, optimized bloom filter for pwned passwords, please download pwned-passwords-ordered-by-count.7z from https://haveibeenpwned.com and extract `pwned-passwords-ordered-by-count.txt` to the current dir.
+To generate all combinations of `top` and `false_positive_probability` bloom filters for pwned passwords, run:
 
-Once you have the `pwned-passwords-ordered-by-count.txt` file in place, you can run the following to generate the filter and cache it for later (on your machine.)
+`rake seed\[all\]`
+
+This will download the source 7zip file with pwned passwords, unpack it to the current dir, write the generated bloom filters in the lib/dump dir relative to the installation path of the gem.
+
+Sometimes you will want to have more precise control of the placement of the cache files. To seed in the current dir, run:
+
+```
+rake seed_here\[all\]
+```
+
+You can override the directory used for caching by giving a `cache_dir` argument to the constructor:
 
 ```ruby
 require 'bloomed'
-pw=Bloomed::PW.new(top: 1E8, false_positive_probability: 0.0001) # 247 Mb! memory
-pw.pwned? "password123"
-=> true
+pw=Bloomed::PW.new(top:1E8,                               false_positive_probability: 0.0001,
+  cache_dir: '/var/lib/bloomed'
+)
 ```
 
-### The cache
-
-The cache is stored in the `dumps` dir inside `dirname $(gem which bloomed)`.
+This can be usefull for deployment scenarios.
 
 ### Size of the in memory bloom filter
 
