@@ -29,7 +29,7 @@ Or install it yourself as:
 
 ```ruby
 require 'bloomed'
-pw=Bloomed::PW.new
+pw = Bloomed::PW.new
 pw.pwned? "password123"
 => true
 ```
@@ -41,7 +41,7 @@ There are two parameters that can be varied: `top` and `false_positive_probabili
 
 ```ruby
 require 'bloomed'
-pw=Bloomed::PW.new(top: 100000, false_positive_probability: 0.01) # 136 kb memory
+pw = Bloomed::PW.new(top: 100000, false_positive_probability: 0.01) # 136 kb memory
 pw.pwned? "password123"
 => true
 ```
@@ -56,22 +56,32 @@ To generate all combinations of `top` and `false_positive_probability` bloom fil
 
 This will download the source 7zip file with pwned passwords, unpack it to the current dir, write the generated bloom filters in the lib/dump dir relative to the installation path of the gem.
 
-Sometimes you will want to have more precise control of the placement of the cache files. To seed in the current dir, run:
+Note: You'll need to `brew install curl p7zip` on macos and `apt-get install curl p7zip` on linux.
+
+Sometimes you will want to have more precise control of the placement of the cache files. To seed all variants in the current dir, run:
 
 ```
 rake seed_here\[all\]
 ```
 
-You can override the directory used for caching by giving a `cache_dir` argument to the constructor:
+But be aware that it will take a long time!
+
+Once you have the massive 22GB text files available, you can generate binary cache files using the exact precision you want.
 
 ```ruby
 require 'bloomed'
-pw=Bloomed::PW.new(top:1E8,                               false_positive_probability: 0.0001,
-  cache_dir: '/var/lib/bloomed'
-)
+pw = Bloomed::PW.new(top:1E9, false_positive_probability: 0.0001)
 ```
 
-This can be usefull for deployment scenarios.
+Warning! This seeds all the passwords and will take a loooong time the first time. Even with a binary cache file in place loading it will take massive time and memory.
+
+For deployment scenarios where you don't want the server to `rake seed`, you can override the directory used for caching by giving a `cache_dir` argument to the constructor:
+
+```ruby
+require 'bloomed'
+pw = Bloomed::PW.new(top:1E8, false_positive_probability: 0.0001, cache_dir: '/var/lib/bloomed'
+)
+```
 
 ### Size of the in memory bloom filter
 

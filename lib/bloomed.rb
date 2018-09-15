@@ -57,13 +57,10 @@ module Bloomed
 
     def generate
       unless File.exist? PWNED_PASSWORDS_FILENAME
-        raise IOError, "In order to generate new, optimized bloom filter for
-        pwned passwords, please download pwned-passwords-ordered-by-count.7z from
-        https://haveibeenpwned.com and extract pwned-passwords-ordered-by-count.txt
-        to the current dir."
+        raise MissingPasswordListError, "To generate new, optimized pwned passwords bloom filter, run `rake seed` or `rake seed_here`. To generate all variants, even the very large binaries, run `rake seed\[all\]` or `rake seed_here\[all\]`."
       end
 
-      bloom_filter = Bloomer::Scalable.new(top, false_positive_probability)
+      bloom_filter = Bloomer.new(top, false_positive_probability)
       File.open(PWNED_PASSWORDS_FILENAME, "r").first(top).each do |line|
         bloom_filter.add line[0...40]
       end
@@ -74,5 +71,8 @@ module Bloomed
       File.write(filename, b.to_msgpack)
       b
     end
+  end
+
+  class MissingPasswordListError < RuntimeError
   end
 end

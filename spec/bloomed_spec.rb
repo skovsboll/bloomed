@@ -51,14 +51,14 @@ RSpec.describe Bloomed do
 
     context "overriding the cache dir" do
       context "empty dir" do
-        require 'tempfile'
-        subject { Bloomed::PW.new(top: 1E2, false_positive_probability: 0.01, cache_dir: File.dirname(Tempfile.new)) }
-        it('raises') { expect{ subject }.to raise_error(IOError) }
+        require "tempfile"
+        subject { Bloomed::PW.new(top: 1E2, false_positive_probability: 0.00001, cache_dir: File.dirname(Tempfile.new)) }
+        it("raises") { expect { subject }.to raise_error(Bloomed::MissingPasswordListError) }
       end
 
       context "non-empty dir" do
-        it('loads') do
-          require 'tempfile'
+        it("loads") do
+          require "tempfile"
           b = Bloomed::PW.new(top: 1E4, false_positive_probability: 0.01)
           dir = File.dirname(Tempfile.new)
           new_file = File.join(dir, File.basename(b.filename))
