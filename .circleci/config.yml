@@ -8,7 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
        - image: circleci/ruby:2.5.1-node-browsers
-      
+
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -35,7 +35,7 @@ jobs:
           paths:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-        
+
       # Database setup
       # - run: bundle exec rake db:create
       # - run: bundle exec rake db:schema:load
@@ -46,10 +46,12 @@ jobs:
           command: |
             mkdir /tmp/test-results
             TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
-            
-            bundle exec rspec --format progress \
-                            --out /tmp/test-results/rspec.xml \
-                            $TEST_FILES
+
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out /tmp/test_results/rspec.xml \
+                              --format progress \
+                              $TEST_FILES
 
       # collect reports
       - store_test_results:
