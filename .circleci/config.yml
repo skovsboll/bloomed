@@ -54,4 +54,4 @@ jobs:
 
       # collect reports
       - store_test_results:
-          path: /tmp/test-results
+          path: /tmp/test_results
