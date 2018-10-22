@@ -1,8 +1,9 @@
-require "./lib/bloomed"
+require "bloomed"
 
 KB = 2 ** 10
 
 module Seeder
+
   def self.seed(all: false, cache_dir: nil)
     ps = [0.01, 0.001, 0.0001]
     cs = [1E4, 1E5]

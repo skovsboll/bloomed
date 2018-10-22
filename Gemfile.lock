@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bloomed (1.0.0)
+    bloomed (1.1.0)
       bloomer (~> 1.0)
       msgpack
 
@@ -54,7 +54,7 @@ GEM
       rspec-mocks (~> 3.8.0)
     rspec-core (3.8.0)
       rspec-support (~> 3.8.0)
-    rspec-expectations (3.8.1)
+    rspec-expectations (3.8.2)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-mocks (3.8.0)
@@ -80,4 +80,4 @@ DEPENDENCIES
   rspec_junit_formatter
 
 BUNDLED WITH
-   1.16.4
+   1.16.5

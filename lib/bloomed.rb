@@ -3,6 +3,8 @@ require_relative "bloomed/msg_packable"
 require "bloomer"
 require "bloomer/msgpackable"
 
+require_relative 'railtie' if defined?(Rails)
+
 module Bloomed
   class PW
     include MsgPackable::Bloomed
@@ -68,7 +70,7 @@ module Bloomed
     end
 
     def write_cache(b)
-      File.write(filename, b.to_msgpack)
+      File.open(filename, 'wb') { |f| f.write b.to_msgpack }
       b
     end
   end
