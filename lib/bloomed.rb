@@ -36,7 +36,7 @@ module Bloomed
     def filename
       inverse_probaility = 1.0 / false_positive_probability
       File.join(cache_dir,
-                "pwned_top_#{top.to_i}_one_in_#{inverse_probaility.to_i}.msgpk")
+                "pwned_top_#{top.to_i}_one_in_#{inverse_probaility.round}.msgpk")
     end
 
     private

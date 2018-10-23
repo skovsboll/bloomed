@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bloomed (1.1.0)
+    bloomed (1.2.0)
       bloomer (~> 1.0)
       msgpack
 

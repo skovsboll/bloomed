@@ -3,6 +3,13 @@ RSpec.describe Bloomed do
     expect(Bloomed::VERSION).not_to be nil
   end
 
+  context "#filename" do
+    subject { Bloomed::PW.new(top: 1E4, false_positive_probability: 0.00001) }
+    it "does probability" do
+      expect(File.basename(subject.filename)).to eq "pwned_top_10000_one_in_100000.msgpk"
+    end
+  end
+
   context "low precision" do
     subject { Bloomed::PW.new(top: 1E4, false_positive_probability: 0.01) }
 
