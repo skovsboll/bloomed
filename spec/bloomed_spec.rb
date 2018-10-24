@@ -60,7 +60,9 @@ RSpec.describe Bloomed do
       context "empty dir" do
         require "tempfile"
         subject { Bloomed::PW.new(top: 1E2, false_positive_probability: 0.00001, cache_dir: File.dirname(Tempfile.new)) }
-        it("raises") { expect { subject }.to raise_error(Bloomed::MissingPasswordListError) }
+        it("raises") {
+          expect { subject }.to raise_error(Bloomed::MissingPasswordListError)
+        }
       end
 
       context "non-empty dir" do
