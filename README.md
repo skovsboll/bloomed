@@ -52,7 +52,7 @@ To keep the gem size small, it only ships with dumps up to 253 kb in size.
 
 To generate all combinations of `top` and `false_positive_probability` bloom filters for pwned passwords, run:
 
-`rake seed\[all\]`
+`rake bloomed:seed`
 
 This will download the source 7zip file with pwned passwords, unpack it to the current dir, write the generated bloom filters in the lib/dump dir relative to the installation path of the gem.
 
@@ -61,7 +61,7 @@ Note: You'll need to `brew install curl p7zip` on macos and `apt-get install cur
 Sometimes you will want to have more precise control of the placement of the cache files. To seed all variants in the current dir, run:
 
 ```
-rake seed_here\[all\]
+rake bloomed:seed\[all\]
 ```
 
 But be aware that it will take a long time!
